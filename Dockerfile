@@ -3,7 +3,8 @@ WORKDIR /app
 COPY . ./
 ENV PORT 3000
 ENV TZ Asia/Shanghai
-RUN apk add tzdata && cp /usr/share/zoneinfo/${TZ} /etc/localtime \
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
+    && apk add tzdata && cp /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo ${TZ} > /etc/timezone \
     && apk del tzdata
 EXPOSE $PORT
